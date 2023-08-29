@@ -12,17 +12,18 @@
   "dependencies": {
     "@hotwired/stimulus": "^3.0.1",
     "@popperjs/core": "^2.11.8",
-    "autoprefixer": "^10.4.14",
+    "autoprefixer": "^10.4.15",
     "bootstrap": "^5.3.1",
     "bootstrap-icons": "^1.10.5",
     "chart.js": "^4.3.0",
     "chartkick": "^5.0.1",
     "nodemon": "^3.0.1",
-    "postcss": "^8.4.27",
+    "postcss": "^8.4.28",
     "postcss-cli": "^10.1.0",
-    "sass": "^1.64.1"
+    "sass": "^1.66.1"
   },
   "browserslist": [
+    "defaults",
     "defaults"
   ]
 }
