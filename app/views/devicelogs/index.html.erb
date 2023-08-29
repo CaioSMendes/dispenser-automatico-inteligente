@@ -1,0 +1,27 @@
+<h1>Registros de Dispositivos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Device</th>
+      <th>Status</th>
+      <th>IP Address</th>
+      <th>Cont</th>
+      <th>Last Seen</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @devices.each do |devices| %>
+      <tr>
+        <td><%= devices.device %></td>
+        <td><%= devices.status %></td>
+        <td><%= devices.ipadrrs %></td>
+        <td><%= devices.cont %></td>
+        <td><%= devices.last_seen %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<%= link_to 'Atualizar Dispositivos', fetch_and_save_data_devices_path, method: :post %>

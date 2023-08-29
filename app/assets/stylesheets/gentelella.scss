@@ -1,0 +1,14 @@
+// app/assets/stylesheets/gentelella.scss
+
+// Importe o arquivo principal do Gentelella Alela 2
+@import 'gentelella_alela_v2/vendors/bootstrap/dist/css/bootstrap';
+@import 'gentelella_alela_v2/vendors/font-awesome/css/font-awesome';
+@import 'gentelella_alela_v2/vendors/fontawesome/css/font-awesome';
+@import 'gentelella_alela_v2/vendors/nprogress/nprogress';
+@import 'gentelella_alela_v2/vendors/animate.css/animate';
+@import 'gentelella_alela_v2/build/css/custom';
+
+// Importe os arquivos CSS dos plugins que você deseja utilizar
+@import 'gentelella_alela_v2/vendors/pnotify/dist/pnotify';
+@import 'gentelella_alela_v2/vendors/pnotify/dist/pnotify.buttons';
+// Adicione mais imports de outros plugins conforme necessário

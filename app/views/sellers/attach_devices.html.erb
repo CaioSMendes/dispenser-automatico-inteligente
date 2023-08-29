@@ -1,0 +1,12 @@
+<!-- app/views/sellers/attach_devices.html.erb -->
+<h1>Atrelar Devices ao Seller</h1>
+<%= form_with model: @seller, url: save_attached_devices_seller_path(@seller), method: :post do |f| %>
+  <h2>Dispositivos Disponíveis</h2>
+  <% @devices.each do |device| %>
+    <%= check_box_tag "seller[device_ids][]", device.id, @seller.devices.include?(device) %>
+    <%= device.nome %>
+    <br>
+  <% end %>
+
+  <%= f.submit "Salvar" %>
+<% end %>

@@ -1,0 +1,179 @@
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <%= link_to 'Painel Administrativo', admin_index_path, class: 'navbar-brand' %>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Opções <i class="fa fa-gear"></i>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#"><%= current_user.name %></a>
+            <%= link_to 'Editar', edit_user_registration_path, class: 'dropdown-item' %>
+            <%= link_to 'Sair', destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
+          </div> 
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <!-- /Navbar -->
+
+<div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-lg-3">
+            <div class="sidebar bg-dark">
+            <ul class="list-group">
+                <%if current_user.user? %>
+                <li class="list-group-item active">Dashboard</li>
+                <li class="list-group-item"><%= link_to 'Home', admin_index_path %></li>
+                <li class="list-group-item"><%= link_to 'Gestão de Vendedores', sellers_path %></li>
+                <li class="list-group-item"><%= link_to 'Vizualização dos Meus Dispositivos', status_path %></li>
+                <li class="list-group-item"><%= link_to 'Configuração de Preço', dose_prices_path %></li>
+                <%else%>
+                <li class="list-group-item active">Dashboard</li>
+                <li class="list-group-item"><%= link_to 'Home', admin_index_path %></li>
+                <li class="list-group-item"><%= link_to 'Gestão de Usuários', administrador_users_path %></li>
+                <li class="list-group-item"><%= link_to 'Vizualização dos Meus Dispositivos', status_path %></li>
+                <li class="list-group-item"><%= link_to 'Gestão de Dispositivos', devices_path %></li>
+                <li class="list-group-item"><%= link_to 'Gestão da API', sms_messages_path %></li>
+                <li class="list-group-item"><%= link_to 'Configuração de Mensagens', sms_messages_path %></li>
+                <li class="list-group-item"><%= link_to 'Configuração de Preço', dose_prices_path %></li>
+                <%end%>
+            </ul>
+            </div>
+      </div>
+      <!-- /Sidebar -->
+      <div class="col-lg-9">
+        <h1 class="mt-4">Valor da dose</h1>
+        <div class="container">
+        
+        <table>
+            <tr>
+            <th>Valor da Dose</th>
+            <th>Ações</th>
+            </tr>
+            <% @dose_prices.each do |dose_price| %>
+            <tr>
+                <td><%= dose_price.price %></td>
+                <td>
+                <%= link_to 'Editar', edit_dose_price_path(dose_price) %>
+                <%= link_to 'Excluir', dose_price_path(dose_price), method: :delete, data: { confirm: 'Tem certeza?' } %>
+                </td>
+            </tr>
+            <% end %>
+        </table>
+
+  <%= link_to 'Novo Valor da Dose', new_dose_price_path %>
+
+        </div>
+      </div>      
+    </div>
+</div>
+<%= render partial: 'layouts/footer-admin' %>
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <%= link_to 'Painel Administrativo', admin_index_path, class: 'navbar-brand' %>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Opções <i class="fa fa-gear"></i>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#"><%= current_user.name %></a>
+            <%= link_to 'Editar', edit_user_registration_path, class: 'dropdown-item' %>
+            <%= link_to 'Sair', destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
+          </div> 
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <!-- /Navbar -->
+
+<div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-lg-3">
+            <div class="sidebar bg-dark">
+            <ul class="list-group">
+                <%if current_user.user? %>
+                <li class="list-group-item active">Dashboard</li>
+                <li class="list-group-item"><%= link_to 'Home', admin_index_path %></li>
+                <li class="list-group-item"><%= link_to 'Gestão de Vendedores', sellers_path %></li>
+                <li class="list-group-item"><%= link_to 'Vizualização dos Meus Dispositivos', status_path %></li>
+                <li class="list-group-item"><%= link_to 'Configuração de Preço', dose_prices_path %></li>
+                <%else%>
+                <li class="list-group-item active">Dashboard</li>
+                <li class="list-group-item"><%= link_to 'Home', admin_index_path %></li>
+                <li class="list-group-item"><%= link_to 'Gestão de Usuários', administrador_users_path %></li>
+                <li class="list-group-item"><%= link_to 'Vizualização dos Meus Dispositivos', status_path %></li>
+                <li class="list-group-item"><%= link_to 'Gestão de Dispositivos', devices_path %></li>
+                <li class="list-group-item"><%= link_to 'Gestão da API', sms_messages_path %></li>
+                <li class="list-group-item"><%= link_to 'Configuração de Mensagens', sms_messages_path %></li>
+                <li class="list-group-item"><%= link_to 'Configuração de Preço', dose_prices_path %></li>
+                <%end%>
+            </ul>
+            </div>
+      </div>
+      <!-- /Sidebar -->
+      <div class="col-lg-9">
+        <h1 class="mt-4">Configurações de Preço dose</h1>
+        <div class="container">
+          <!-- Exibe o formulário de criação ou edição da mensagem padrão -->
+          <% if @dose_price.present? && @dose_price.any? %>
+              <% last_dose = @last_dose.last %>
+                <h2>Mensagem Padrão:</h2>
+                <p><%= @last_dose.price %></p>
+                <div class="d-flex justify-content-start">
+                <%= form_with(model: @dose_price, url: dose_prices_path) do |form| %>
+                    <%= form.label :price, 'Valor da Dose:' %>
+                    <%= form.text_field :price %>
+                    <%= submit_tag "Salvar", class: "btn btn-success" %>
+                <% end %>
+                    <%= link_to "Editar", edit_dose_price_path(dose_price), class: "btn btn-primary mx-1" %>
+                    <%= button_to "Apagar", dose_price_path(dose_price), method: :delete, data: { confirm: 'Tem certeza?' }, class: "btn btn-danger mx-1" %>
+                    </div>
+            <% else %>
+            <p>Nenhum preço definido.</p>
+            <%= link_to "Definir preço", new_dose_price_path, class: "btn btn-success" %>
+            <% end %>
+
+          <!-- Botão de disparo manual do SMS -->
+        </div>
+      </div>      
+    </div>
+</div>
+<%= render partial: 'layouts/footer-admin' %>
+
+
+

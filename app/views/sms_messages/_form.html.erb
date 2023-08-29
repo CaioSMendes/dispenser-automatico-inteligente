@@ -1,0 +1,22 @@
+<%= form_with(model: sms_message) do |form| %>
+  <% if sms_message.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(sms_message.errors.count, "error") %> prohibited this sms_message from being saved:</h2>
+
+      <ul>
+        <% sms_message.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :smsbody, style: "display: block" %>
+    <%= form.text_field :smsbody %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

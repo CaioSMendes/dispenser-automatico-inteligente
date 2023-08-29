@@ -1,0 +1,43 @@
+// Custom bootstrap variables must be set or imported *before* bootstrap.
+@import "bootstrap";
+@import "font-awesome";
+
+.status-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  
+  .status-online {
+    background-color: green;
+  }
+  .status-offline {
+    background-color: red;
+  }
+
+  /* styles.css */
+.pagination .page-item {
+  margin-right: 5px;
+}
+
+.pagination .page-item .page-link {
+  padding: 5px 10px;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: #fff;
+}
+
+.pagination .page-item .page-link:hover {
+  background-color: #0056b3;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+.button-group {
+  display: inline-block;
+  margin-right: 10px; /* Ajuste o valor da margem conforme necessário */
+}

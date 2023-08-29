@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dispenser Inteligente</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <% if current_user.role == "admin" %>
+      <!-- Código para administradores -->
+    <% else %>
+      <!-- Código para usuários normais -->
+      <!------------------------------ Usuário ---------------------------------------->
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <%= link_to 'Painel Usuário', user_index_path, class: 'navbar-brand' %>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                Opções <i class="fa fa-gear"></i>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="#"><%= current_user.name %></a>
+                <%= link_to 'Editar', edit_user_registration_path, class: 'dropdown-item' %>
+                <%= link_to 'Sair', destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
+              </div> 
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <!-- /Navbar -->
+      <div class="container-fluid">
+        <div class="row">
+          <!-- Sidebar -->
+          <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
+          <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+            <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+            <span class="fs-4">Menu</span>
+          </a>
+          <hr>
+          <ul class="nav nav-pills flex-column mb-auto">
+    
+            <li class="nav-item">
+              <%= link_to user_index_path, class: "nav-link active", "aria-current" => "page" do %>
+                <i class="fa fa-home me-2" aria-hidden="true"></i>
+                Home
+              <% end %>
+            </li>
+    
+            <li class="nav-item">
+              <%= link_to sellers_path, class: "nav-link text-white d-flex align-items-center" do %>
+                <i class="fa fa-users me-2" aria-hidden="true"></i>
+                Gestão de Vendedores
+              <% end %>
+            </li>
+    
+            <li class="nav-item">
+              <%= link_to status_path, class: "nav-link text-white d-flex align-items-center" do %>
+                <i class="fa fa-cogs me-2" aria-hidden="true"></i>
+                Vizualização dos Meus Dispositivos
+              <% end %>
+            </li>
+    
+            <li class="nav-item">
+              <%= link_to dose_prices_path, class: "nav-link text-white d-flex align-items-center" do %>
+                <i class="fa fa-dollar me-2" aria-hidden="true"></i>
+                Configuração de Preço
+              <% end %>
+            </li>
+          </ul>
+          <hr>
+        </div>
+      <!-- /Sidebar -->
+      <!------------------------------ Conteúdo principal ------------------------------>
+      
+      <!------------------------------ /Conteúdo principal Final------------------------------>
+      <!------------------------------ /Usuário Final ---------------------------------------->
+    <% end %>
+    <%= yield %>
+  </body>
+  <!-- Footer -->
+      <footer class="bg-light text-center text-lg-start">
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+          © 2023 Seu Painel Administrativo
+        </div>
+      </footer>
+  <!-- /Footer -->
+</html>

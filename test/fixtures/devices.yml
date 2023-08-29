@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  device: MyString
+  status: MyString
+  ipadrrs: MyString
+  cont: 1
+  last_seen: 2023-07-15 07:43:57
+
+two:
+  device: MyString
+  status: MyString
+  ipadrrs: MyString
+  cont: 1
+  last_seen: 2023-07-15 07:43:57

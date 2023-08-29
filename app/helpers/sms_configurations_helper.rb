@@ -1,0 +1,2 @@
+module SmsConfigurationsHelper
+end

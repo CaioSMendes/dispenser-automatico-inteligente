@@ -1,0 +1,32 @@
+<!-- app/views/api_manager/_form.html.erb -->
+
+<%= form_for @device do |f| %>
+  <%= f.label :device %>
+  <%= f.text_field :device %>
+
+  <%= f.label :status %>
+  <%= f.text_field :status %>
+
+  <%= f.label :ipadrrs %>
+  <%= f.text_field :ipadrrs %>
+
+  <%= f.label :cont %>
+  <%= f.number_field :cont %>
+
+  <%= f.label :last_seen %>
+  <%= f.date_field :last_seen %>
+
+  <%= f.label :padlock %>
+  <%= f.text_field :padlock %>
+
+  <%= f.label :owner %>
+  <%= f.text_field :owner %>
+
+  <%= f.label :phone %>
+  <%= f.text_field :phone %>
+
+  <%= f.label :fullmax %>
+  <%= f.number_field :fullmax %>
+
+  <%= f.submit %>
+<% end %>

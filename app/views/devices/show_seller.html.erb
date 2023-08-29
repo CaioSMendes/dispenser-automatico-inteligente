@@ -1,0 +1,13 @@
+<!-- app/views/devices/show_seller.html.erb -->
+
+<h1>Detalhes do Dispositivo</h1>
+<p>Dispositivo: <%= @device.device %></p>
+<p>Status: <%= @device.status %></p>
+<p>Endereço de IP: <%= @device.ipadrrs %></p>
+
+<% if @device.seller %>
+  <p>Vendedor Associado: <%= @device.seller.nome %></p>
+  <%= button_to "Desassociar Vendedor", dissociate_seller_seller_path(@device), method: :delete, data: { confirm: 'Tem certeza que deseja desassociar este dispositivo?' }, class: "btn btn-danger" %>
+<% else %>
+  <p>Nenhum vendedor associado.</p>
+<% end %>

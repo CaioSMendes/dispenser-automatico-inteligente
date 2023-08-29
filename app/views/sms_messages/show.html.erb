@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @sms_message %>
+
+<div>
+  <%= link_to "Edit this sms message", edit_sms_message_path(@sms_message) %> |
+  <%= link_to "Back to sms messages", sms_messages_path %>
+
+  <%= button_to "Destroy this sms message", @sms_message, method: :delete %>
+</div>

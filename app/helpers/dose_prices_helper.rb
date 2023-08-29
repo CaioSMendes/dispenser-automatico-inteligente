@@ -1,0 +1,2 @@
+module DosePricesHelper
+end

@@ -1,0 +1,11 @@
+<!-- app/views/api_manager/index.html.erb -->
+
+<h1>API Manager</h1>
+
+<% @devices.each do |device| %>
+  <p><%= device['device'] %>, <%= device['status'] %>, <%= device['owner'] %>, <%= device['phone'] %></p>
+  <%= link_to 'Edit', edit_device_path(device['id']) %> |
+  <%= link_to 'Delete', device_path(device['id']), method: :delete, data: { confirm: 'Are you sure?' } %>
+<% end %>
+
+<%= link_to 'New Device', new_device_path %>
