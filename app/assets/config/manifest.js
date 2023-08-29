@@ -5,4 +5,3 @@
 //= link application.css
 //= link gentelella.scss
 //= link gentelella.css
-//= require chart.min

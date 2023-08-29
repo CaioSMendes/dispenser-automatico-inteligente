@@ -24,6 +24,13 @@ class AdminController < ApplicationController
             # Por exemplo, você pode definir valores padrão ou exibir uma mensagem
         end
 
+        @seller_sales = Seller.group(:nome).sum(:contador)
+        @seller_names = @seller_sales.keys
+        @total_sales = @seller_sales.values
+
+        @users = User.all
+        @role_counts = @users.group(:role).count
+
         @users = User.where(role: 'user')
         @users_total = @users.count
 

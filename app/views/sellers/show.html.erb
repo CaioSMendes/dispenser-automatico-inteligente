@@ -1,10 +1,162 @@
-<p style="color: green"><%= notice %></p>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css">
 
-<%= render @seller %>
+<!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <%= link_to admin_index_path, class: 'navbar-brand' do %>
+      <i class="fa fa-home"></i>
+      Painel Administrativo
+    <% end %>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+            Opções <i class="fa fa-gear"></i>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#">
+              <i class="fa fa-user"></i>
+              <%= current_user.name %>
+            </a>                
+            <%= link_to edit_user_registration_path, class: 'dropdown-item' do %>
+              <i class="fa fa-cog"></i>
+              Editar
+            <% end %>                
+            <%= link_to destroy_user_session_path, method: :delete, class: 'dropdown-item' do %>
+              <i class="fa fa-sign-out"></i>
+              Sair
+            <% end %>              
+          </div> 
+        </li>
+      </ul>
+    </div>
+  </nav>
+<!-- /Navbar -->
 
-<div>
-  <%= link_to "Edit this seller", edit_seller_path(@seller) %> |
-  <%= link_to "Back to sellers", sellers_path %>
+<div class="container-fluid">
+  <div class="row">
 
-  <%= button_to "Destroy this seller", @seller, method: :delete %>
+
+  <!-- Sidebar -->
+        <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+        <i class="fa fa-bars me-2" aria-hidden="true"></i>
+        <span class="fs-4">Menu</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+          <% if current_user.role == "admin" %>
+            <!-- Código para administradores -->
+            <li class="nav-item">
+              <%= link_to admin_index_path, class: "nav-link active", "aria-current" => "page" do %>
+                <i class="fa fa-home me-2" aria-hidden="true"></i>
+                Home
+              <% end %>
+            </li>
+
+            <li class="nav-item">
+              <%= link_to administrador_users_path, class: "nav-link text-white d-flex align-items-center" do %>
+                <i class="fa fa-user me-2" aria-hidden="true"></i>
+                Gestão de Usuários
+              <% end %>
+            </li>
+
+            <li class="nav-item">
+              <%= link_to sellers_path, class: "nav-link text-white d-flex align-items-center" do %>
+                <i class="fa fa-users me-2" aria-hidden="true"></i>
+                Gestão de Vendedores
+              <% end %>
+            </li>
+
+            <li class="nav-item">
+              <%= link_to status_path, class: "nav-link text-white d-flex align-items-center" do %>
+                <i class="fa fa-desktop me-2" aria-hidden="true"></i>
+                Meus Dispositivos
+              <% end %>
+            </li>
+
+
+            <li class="nav-item">
+              <%= link_to devices_path, class: "nav-link text-white d-flex align-items-center" do %>
+                <i class="fa fa-cogs me-2" aria-hidden="true"></i>
+                Gestão de Dispositivos
+              <% end %>
+            </li>
+
+            <li class="nav-item">
+              <%= link_to sms_messages_path, class: "nav-link text-white d-flex align-items-center" do %>
+                <i class="fa fa-envelope me-2" aria-hidden="true"></i>
+                Painel de Mensagens
+              <% end %>
+            </li>
+
+            <li class="nav-item">
+              <%= link_to dose_prices_path, class: "nav-link text-white d-flex align-items-center" do %>
+                <i class="fa fa-dollar me-2" aria-hidden="true"></i>
+                Configuração de Preço
+              <% end %>
+            </li>
+          <% else %>
+            <!-- Código para usuários normais -->
+            <li class="nav-item">
+              <%= link_to admin_index_path, class: "nav-link active", "aria-current" => "page" do %>
+                <i class="fa fa-home me-2" aria-hidden="true"></i>
+                Home
+              <% end %>
+            </li>
+
+            <li class="nav-item">
+              <%= link_to sellers_path, class: "nav-link text-white d-flex align-items-center" do %>
+                <i class="fa fa-users me-2" aria-hidden="true"></i>
+                Gestão de Vendedores
+              <% end %>
+            </li>
+
+            <li class="nav-item">
+              <%= link_to status_path, class: "nav-link text-white d-flex align-items-center" do %>
+                <i class="fa fa-desktop me-2" aria-hidden="true"></i>
+                Meus Dispositivos
+              <% end %>
+            </li>
+
+            <li class="nav-item">
+              <%= link_to dose_prices_path, class: "nav-link text-white d-flex align-items-center" do %>
+                <i class="fa fa-dollar me-2" aria-hidden="true"></i>
+                Configuração de Preço
+              <% end %>
+            </li>
+
+          <% end %>
+        </ul>
+        <hr>
+      </div>
+    <!-- /Sidebar -->
+    <!-------------------- --Conteúdo principal ------------------------->
+    <!-- Conteúdo principal -->
+      <div class="col-lg-9">
+        <h1 class="mt-4">Dados do <%= @seller.nome %></h1>
+        <div class="right_col" role="main">
+          <!-- ... (conteúdo do gráfico e da tabela) ... -->
+            <p style="color: green"><%= notice %></p>
+              <%= render @seller %>
+              <div>
+                <%= link_to "Edit this seller", edit_seller_path(@seller) %> |
+                <%= link_to "Back to sellers", sellers_path %>
+                <%= button_to "Destroy this seller", @seller, method: :delete %>
+              </div>
+          <!-- ... (Fnal conteúdo do gráfico e da tabela) ... -->  
+    <!-- /Conteúdo principal -->
+    <!--------------------- /Conteúdo principal ------------------------->
+  </div>
 </div>
+

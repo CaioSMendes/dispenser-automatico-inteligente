@@ -1,238 +1,244 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css">
 
-<body class="nav-md">
-  <div class="container body">
-    <div class="main_container">
-      <div class="col-md-3 left_col">
-        <div class="left_col scroll-view">
-          <div class="navbar nav_title" style="border: 0;">
-            <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
-          </div>
-          <div class="clearfix"></div>
-          <!-- menu profile quick info -->
-          <div class="profile clearfix">
-            <div class="profile_pic">
-              <img src="images/img.jpg" alt="..." class="img-circle profile_img">
-            </div>
-            <div class="profile_info">
-              <span>Welcome,</span>
-              <h2><%= current_user.name%></h2>
-            </div>
-          </div>
-          <!-- /menu profile quick info -->
-          <br/>
-          <!-- sidebar menu -->
-          <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-            <div class="menu_section">
-              <%if current_user.admin? %>
-              <h3>Painel Administrador</h3>
-                <ul class="nav side-menu">
-                  <li>
-                    <%= link_to admin_index_path do %>
-                      <i class="glyphicon glyphicon-home"></i> Home
-                      <span class="fa fa-chevron-down"></span>
-                    <% end %>
-                  </li>
-                  <li>
-                    <%= link_to administrador_users_path do %>
-                      <i class="glyphicon glyphicon-user"></i>  Gestão de Usuários
-                      <span class="fa fa-chevron-down"></span>
-                    <% end %>
-                  </li>
-                  <li>
-                    <%= link_to sellers_path do %>
-                      <i class="glyphicon glyphicon-tag"> </i> Gestão de Vendedores
-                      <span class="fa fa-chevron-down"></span>
-                    <% end %>
-                  </li>
-                  <li>
-                    <%= link_to status_path do %>
-                      <i class="glyphicon glyphicon-eye-open"> </i> Vizualização de Dispositivos
-                      <span class="fa fa-chevron-down"></span>
-                    <% end %>
-                  </li>
-                  <li>
-                    <%= link_to devices_path do %>
-                      <i class="glyphicon glyphicon-phone"></i> Gestão de Dispositivos 
-                      <span class="fa fa-chevron-down"></span>
-                    <% end %>
-                  </li>
-                  <li>
-                    <%= link_to sms_messages_path do %>
-                      <i class="glyphicon glyphicon-ok"></i> Gestão da API
-                      <span class="fa fa-chevron-down"></span>
-                    <% end %>
-                  </li>
-                  <li>
-                    <%= link_to sms_messages_path do %>
-                      <i class="glyphicon glyphicon-envelope"></i> Configuração de Mensagens
-                      <span class="fa fa-chevron-down"></span>
-                    <% end %>
-                  </li>
-                  <li>
-                    <%= link_to dose_prices_path do %>
-                      <i class="glyphicon glyphicon-usd"></i> Configuração de Preço
-                      <span class="fa fa-chevron-down"></span>
-                    <% end %>
-                  </li>
-                </ul>
-              <%else%>
-              <h3>Painel Usuário</h3>
-              <ul class="nav side-menu">
-                  <li>
-                    <%= link_to admin_index_path do %>
-                      <i class="glyphicon glyphicon-home"></i> Home
-                      <span class="fa fa-chevron-down"></span>
-                    <% end %>
-                  </li>
-                  <li>
-                    <%= link_to sellers_path do %>
-                      <i class="glyphicon glyphicon-tag"> </i> Gestão de Vendedores
-                      <span class="fa fa-chevron-down"></span>
-                    <% end %>
-                  </li>
-                  <li>
-                    <%= link_to status_path do %>
-                      <i class="glyphicon glyphicon-eye-open"> </i> Vizualização dos Meus Dispositivos
-                      <span class="fa fa-chevron-down"></span>
-                    <% end %>
-                  </li>                 
-                  <li>
-                    <%= link_to dose_prices_path do %>
-                      <i class="glyphicon glyphicon-usd"></i> Configuração de Preço
-                      <span class="fa fa-chevron-down"></span>
-                    <% end %>
-                  </li>
-                </ul>
-              <%end%>
-            </div>
-          </div>
-          <!-- /sidebar menu -->
-          <!-- /menu footer buttons -->
-          <div class="sidebar-footer hidden-small">
-            <a data-toggle="tooltip" data-placement="top" title="Settings">
-              <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-            </a>
-            <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-              <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-            </a>
-            <a data-toggle="tooltip" data-placement="top" title="Lock">
-              <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-            </a>
-            <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
-              <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-            </a>
-          </div>
-          <!-- /menu footer buttons -->
-        </div>
-      </div>
-      <!-- Navbar -->
-      <nav class="navbar navbar-expand-lg navbar-light bg-dark">
-      <%= link_to 'Painel Administrativo', admin_index_path, class: 'navbar-brand' %>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <%= current_user.name%> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <%= link_to edit_user_registration_path, class: 'dropdown-item' do %>
-                  <p>
-                    Editar<span class="glyphicon glyphicon-edit"></span>
-                  </p>
-                <% end %> 
-                <%= link_to destroy_user_session_path, method: :delete, class: 'dropdown-item' do %>
-                  <p>
-                    Sair <span class="glyphicon glyphicon-log-out"></span>
-                  </p>
-                <% end %>                
-              </div> 
-            </li>
-          </ul>
-        </div>
-      </nav>
-      <!-- /Navbar -->
-      <!-- page content -->
-      <div class="right_col" role="main">
-        <!-- top tiles -->
-        <div class="row">
-        <div class="col-md-12 col-sm-12">
-          <div class="dashboard_graph">
-            <div class="row x_title">
-              <div class="col-md-6">
-                <h3>Todos os Dispositivos</h3>
-              </div>
+<!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <%= link_to admin_index_path, class: 'navbar-brand' do %>
+      <i class="fa fa-home"></i>
+      Painel Administrativo
+    <% end %>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+            Opções <i class="fa fa-gear"></i>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#">
+              <i class="fa fa-user"></i>
+              <%= current_user.name %>
+            </a>                
+            <%= link_to edit_user_registration_path, class: 'dropdown-item' do %>
+              <i class="fa fa-cog"></i>
+              Editar
+            <% end %>                
+            <%= link_to destroy_user_session_path, method: :delete, class: 'dropdown-item' do %>
+              <i class="fa fa-sign-out"></i>
+              Sair
+            <% end %>              
+          </div> 
+        </li>
+      </ul>
+    </div>
+  </nav>
+<!-- /Navbar -->
 
-              <% if @error_message %>
-              <p><strong>Erro:</strong> <%= @error_message %></p>
-              <% else %>
-                <!-- Conteúdo da lista de dispositivos aqui -->
-                <div class="row">
-                  <% @results.each do |result| %>
-                    <div class="col-lg-3 col-md-6">
-                      <div class="card">
-                        <%= image_tag 'dispenser.jpg', class: "card-img-top" , alt: "Produto 1" %>
-                        <div class="card-body">
-                          <h5 class="card-title"><p><%= result['device'] %></p></h5>
-                          <p><strong>Status:</strong> <%= result['status'] %> <span class="status-dot status-online"></span></p>
-                          <p><strong>IP Device:</strong> <%= result['ipadrrs'] %></p>
-                          <p><strong>Quantidade de doses:</strong> <%= result['cont'] %></p>
-                          <% if result['last_seen'].present? %>
-                            <p><strong>Online última vez:</strong> <%= DateTime.parse(result['last_seen']).strftime('%d/%m/%Y - %H:%M:%S') %></p>
-                          <% else %>
-                            <p><strong>Online última vez:</strong> Data e hora indisponíveis</p>
-                          <% end %>
-                          <div class="text-center">
-                            <% if result["padlock"] == "unlock" %>
-                              <button type="button" class="btn btn-success">
-                                <i class="glyphicon glyphicon-lock"></i> Desbloqueado
-                              </button>
-                            <% else %>
-                            <button type="button" class="btn btn-danger">
-                              <i class="glyphicon glyphicon-lock"></i> Bloqueado
+<div class="container-fluid">
+  <div class="row">
+
+
+  <!-- Sidebar -->
+        <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+        <i class="fa fa-bars me-2" aria-hidden="true"></i>
+        <span class="fs-4">Menu</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+          <% if current_user.role == "admin" %>
+            <!-- Código para administradores -->
+            <li class="nav-item">
+              <%= link_to admin_index_path, class: "nav-link active", "aria-current" => "page" do %>
+                <i class="fa fa-home me-2" aria-hidden="true"></i>
+                Home
+              <% end %>
+            </li>
+
+            <li class="nav-item">
+              <%= link_to administrador_users_path, class: "nav-link text-white d-flex align-items-center" do %>
+                <i class="fa fa-user me-2" aria-hidden="true"></i>
+                Gestão de Usuários
+              <% end %>
+            </li>
+
+            <li class="nav-item">
+              <%= link_to sellers_path, class: "nav-link text-white d-flex align-items-center" do %>
+                <i class="fa fa-users me-2" aria-hidden="true"></i>
+                Gestão de Vendedores
+              <% end %>
+            </li>
+
+            <li class="nav-item">
+              <%= link_to status_path, class: "nav-link text-white d-flex align-items-center" do %>
+                <i class="fa fa-desktop me-2" aria-hidden="true"></i>
+                Meus Dispositivos
+              <% end %>
+            </li>
+
+
+            <li class="nav-item">
+              <%= link_to devices_path, class: "nav-link text-white d-flex align-items-center" do %>
+                <i class="fa fa-cogs me-2" aria-hidden="true"></i>
+                Gestão de Dispositivos
+              <% end %>
+            </li>
+
+            <li class="nav-item">
+              <%= link_to sms_messages_path, class: "nav-link text-white d-flex align-items-center" do %>
+                <i class="fa fa-envelope me-2" aria-hidden="true"></i>
+                Painel de Mensagens
+              <% end %>
+            </li>
+
+            <li class="nav-item">
+              <%= link_to dose_prices_path, class: "nav-link text-white d-flex align-items-center" do %>
+                <i class="fa fa-dollar me-2" aria-hidden="true"></i>
+                Configuração de Preço
+              <% end %>
+            </li>
+          <% else %>
+            <!-- Código para usuários normais -->
+            <li class="nav-item">
+              <%= link_to admin_index_path, class: "nav-link active", "aria-current" => "page" do %>
+                <i class="fa fa-home me-2" aria-hidden="true"></i>
+                Home
+              <% end %>
+            </li>
+
+            <li class="nav-item">
+              <%= link_to sellers_path, class: "nav-link text-white d-flex align-items-center" do %>
+                <i class="fa fa-users me-2" aria-hidden="true"></i>
+                Gestão de Vendedores
+              <% end %>
+            </li>
+
+            <li class="nav-item">
+              <%= link_to status_path, class: "nav-link text-white d-flex align-items-center" do %>
+                <i class="fa fa-desktop me-2" aria-hidden="true"></i>
+                Meus Dispositivos
+              <% end %>
+            </li>
+
+            <li class="nav-item">
+              <%= link_to dose_prices_path, class: "nav-link text-white d-flex align-items-center" do %>
+                <i class="fa fa-dollar me-2" aria-hidden="true"></i>
+                Configuração de Preço
+              <% end %>
+            </li>
+
+          <% end %>
+        </ul>
+        <hr>
+      </div>
+    <!-- /Sidebar -->
+    <!-------------------- --Conteúdo principal ------------------------->
+    <!-- Conteúdo principal -->
+      <div class="col-lg-9">
+        <h1 class="mt-4">Todos os Dispositivos</h1>
+        <div class="right_col" role="main">
+          <!-- ... (conteúdo do gráfico e da tabela) ... -->
+            <!-- ... (conteúdo do gráfico e da tabela) ... -->
+              <div class="row">
+                <% @results.each do |result| %>
+                  <div class="col-lg-3 col-md-6">
+                    <div class="card">
+                      <%= image_tag 'dispenser.jpg', class: "card-img-top", alt: "Produto 1" %>
+                      <div class="card-body">
+                        <p>ID: <%= result['id'] %> </p>
+                        <h5 class="card-title"><p><%= result['device'] %></p></h5>
+                        <p><strong>Status:</strong> <%= result['status'] %> <span class="status-dot status-online"></span></p>
+                        <p><strong>IP Device:</strong> <%= result['ipadrrs'] %></p>
+                        <p><strong>Quantidade de doses:</strong> <%= result['cont'] %></p>
+                        <% if result['last_seen'].present? %>
+                          <p><strong>Online última vez:</strong> <%= DateTime.parse(result['last_seen']).strftime('%d/%m/%Y - %H:%M:%S') %></p>
+                        <% else %>
+                          <p><strong>Online última vez:</strong> Data e hora indisponíveis</p>
+                        <% end %>
+
+
+
+                        <div class="text-center">
+                          <% if result["padlock"] == "unlock" %>
+                            <button type="button" class="btn btn-success lock-button" data-device-id="<%= result['device'] %>">
+                              <i class="fa fa-unlock"></i> Desbloqueado
                             </button>
-                              <button class="fa fa-lock btn btn-danger" type="button"></button>
-                            <% end %>
-                          </div>
+                          <% else %>
+                            <button type="button" class="btn btn-danger lock-button" data-device-id="<%= result['device'] %>">
+                              <i class="fa fa-lock"></i> Bloqueado
+                            </button>
+                          <% end %>
                         </div>
+
+
                       </div>
                     </div>
-                  <% end %>
-      
-                </div>
-                </br>
-                </br>
-                <div class="text-center">
-                  <%= paginate @results,theme: 'bootstrap-5',pagination_class: "pagination-sm flex-wrap justify-content-center",nav_class: "d-inline-block"%>
-                </div>  
-              <% end %>
-              
+                  </div>
+                <% end %>
+              </div>
+              </br>
+              </br>
+              <div class="text-center">
+                <%= paginate @results, theme: 'bootstrap-5', pagination_class: "pagination-sm flex-wrap justify-content-center", nav_class: "d-inline-block" %>
+              </div>
+              </div>
+              </div>
               <!-- /top tiles -->
               <!-- /FInal Tabela -->
-            </div>
-          </div>
-        </div>
-      </div>
-      
-        <br/>
-      </div>
-      <!-- /page content -->
-
-      <!-- footer content -->
-      <footer>
-        <div class="pull-right">
-          Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-        </div>
-        <div class="clearfix"></div>
-      </footer>
-      <!-- /footer content -->
-    </div>
+          <!-- ... (Fnal conteúdo do gráfico e da tabela) ... -->  
+    <!-- /Conteúdo principal -->
+    <!--------------------- /Conteúdo principal ------------------------->
   </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const lockButtons = document.querySelectorAll('.lock-button');
+    
+    lockButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const deviceId = this.getAttribute('data-device-id');
+        const id = this.getAttribute('data-device-id'); // Pegar o ID do atributo
+        const url = `https://dispenser-smart-api-9ae096adb72b.herokuapp.com/esp8266s/${id}`;
+        const action = result["padlock"] == "unlock" ? "lock" : "unlock";
+        
+        fetch(url, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            padlock: action
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          // Atualizar a interface conforme necessário
+          if (action === "lock") {
+            this.innerHTML = '<i class="fas fa-lock"></i> Bloqueado';
+            this.classList.remove('btn-success');
+            this.classList.add('btn-danger');
+          } else {
+            this.innerHTML = '<i class="fas fa-lock-open"></i> Desbloqueado';
+            this.classList.remove('btn-danger');
+            this.classList.add('btn-success');
+          }
+          result["padlock"] = action;
+        })
+        .catch(error => {
+          console.error('Erro na requisição:', error);
+        });
+      });
+    });
+  });
+</script>
