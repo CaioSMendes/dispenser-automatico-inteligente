@@ -84,3 +84,11 @@ production:
   database: DispenserInteligente_production
   username: DispenserInteligente
   password: <%= ENV["DISPENSERINTELIGENTE_DATABASE_PASSWORD"] %>
+
+
+development:
+ <<: *default
+ # database: app_development
+ username: <%= ENV['POSTGRES_USER'] %>
+ password: <%= ENV['POSTGRES_PASSWD'] %>
+ host: <%= ENV['POSTGRES_HOST'] %>
