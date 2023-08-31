@@ -155,7 +155,7 @@
                     <div class="card">
                       <%= image_tag 'dispenser.jpg', class: "card-img-top", alt: "Produto 1" %>
                       <div class="card-body">
-                        <p>ID: <%= result['id'] %> </p>
+                        <% result['id'] %>
                         <h5 class="card-title"><p><%= result['device'] %></p></h5>
                         <p><strong>Status:</strong> <%= result['status'] %> <span class="status-dot status-online"></span></p>
                         <p><strong>IP Device:</strong> <%= result['ipadrrs'] %></p>
@@ -165,22 +165,17 @@
                         <% else %>
                           <p><strong>Online última vez:</strong> Data e hora indisponíveis</p>
                         <% end %>
-
-
-
                         <div class="text-center">
-                          <% if result["padlock"] == "unlock" %>
-                            <button type="button" class="btn btn-success lock-button" data-device-id="<%= result['device'] %>">
-                              <i class="fa fa-unlock"></i> Desbloqueado
-                            </button>
-                          <% else %>
-                            <button type="button" class="btn btn-danger lock-button" data-device-id="<%= result['device'] %>">
-                              <i class="fa fa-lock"></i> Bloqueado
-                            </button>
-                          <% end %>
-                        </div>
-
-
+                        <% if result["padlock"] == "unlock" %>
+                          <button type="button" class="btn btn-success lock-button" data-device="<%= result['device'] %>" data-device-id="<%= result['id'] %>">
+                            <i class="fa fa-unlock"></i> Desbloqueado
+                          </button>
+                        <% else %>
+                          <button type="button" class="btn btn-danger lock-button" data-device="<%= result['device'] %>" data-device-id="<%= result['id'] %>">
+                            <i class="fa fa-lock"></i> Bloqueado
+                          </button>
+                        <% end %>
+                      </div>
                       </div>
                     </div>
                   </div>
@@ -201,44 +196,63 @@
   </div>
 </div>
 
+
+
+
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-    const lockButtons = document.querySelectorAll('.lock-button');
-    
+    const lockButtons = document.querySelectorAll(".lock-button");
+
     lockButtons.forEach(button => {
-      button.addEventListener('click', function() {
-        const deviceId = this.getAttribute('data-device-id');
-        const id = this.getAttribute('data-device-id'); // Pegar o ID do atributo
-        const url = `https://dispenser-smart-api-9ae096adb72b.herokuapp.com/esp8266s/${id}`;
-        const action = result["padlock"] == "unlock" ? "lock" : "unlock";
-        
-        fetch(url, {
-          method: 'PATCH',
+      const device = button.getAttribute("data-device");
+      console.log("Nome Device:", device); // Adicione esta linha para exibir o deviceId no console
+      const id = button.getAttribute("data-device-id");
+      console.log("Device ID:", id); // Adicione esta linha para exibir o deviceId no console
+      const storedState = localStorage.getItem(`device_${id}_status`);
+      console.log("Estado Salvo:", storedState); // Adicione esta linha para exibir o deviceId no console
+      const currentState = storedState || (button.classList.contains("btn-success") ? "unlock" : "lock");
+      console.log("currentState:", currentState); // Adicione esta linha para exibir o deviceId no console
+
+      updateButtonStatus(button, currentState);
+
+      button.addEventListener("click", function() {
+        const newStatus = currentState === "unlock" ? "lock" : "unlock";
+
+        fetch(`http://localhost:4000/esp8266s/${id}`, {
+          method: "PATCH",
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            padlock: action
+            padlock: newStatus
           })
         })
         .then(response => response.json())
         .then(data => {
-          // Atualizar a interface conforme necessário
-          if (action === "lock") {
-            this.innerHTML = '<i class="fas fa-lock"></i> Bloqueado';
-            this.classList.remove('btn-success');
-            this.classList.add('btn-danger');
+          if (data.success) {
+            updateButtonStatus(button, newStatus);
+            localStorage.setItem(`device_${id}_status`, newStatus);
+            location.reload(); // Recarrega a página automaticamente
           } else {
-            this.innerHTML = '<i class="fas fa-lock-open"></i> Desbloqueado';
-            this.classList.remove('btn-danger');
-            this.classList.add('btn-success');
+            console.error("Erro ao atualizar o estado do dispositivo.");
           }
-          result["padlock"] = action;
         })
         .catch(error => {
-          console.error('Erro na requisição:', error);
+          console.error("Erro na solicitação para a API:", error);
         });
       });
     });
+
+    function updateButtonStatus(button, status) {
+      if (status === "unlock") {
+        button.classList.remove("btn-danger");
+        button.classList.add("btn-success");
+        button.innerHTML = '<i class="fa fa-unlock"></i> Desbloqueado';
+      } else {
+        button.classList.remove("btn-success");
+        button.classList.add("btn-danger");
+        button.innerHTML = '<i class="fa fa-lock"></i> Bloqueado';
+      }
+    }
   });
 </script>
