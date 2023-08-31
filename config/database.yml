@@ -21,9 +21,13 @@ default: &default
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
+
 development:
-  <<: *default
-  database: DispenserInteligente_development
+ <<: *default
+ database: DispenserInteligente_development
+ username: <%= ENV['POSTGRES_USER'] %>
+ password: <%= ENV['POSTGRES_PASSWD'] %>
+ host: <%= ENV['POSTGRES_HOST'] %>
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -86,9 +90,10 @@ production:
   password: <%= ENV["DISPENSERINTELIGENTE_DATABASE_PASSWORD"] %>
 
 
-development:
- <<: *default
- # database: app_development
- username: <%= ENV['POSTGRES_USER'] %>
- password: <%= ENV['POSTGRES_PASSWD'] %>
- host: <%= ENV['POSTGRES_HOST'] %>
+#CONFIGURAÇÃO PARA O DOCKER
+
+#development:
+ #<<: *default
+ #username: <%= ENV['POSTGRES_USER'] %>
+ #password: <%= ENV['POSTGRES_PASSWD'] %>
+ #host: <%= ENV['POSTGRES_HOST'] %>
