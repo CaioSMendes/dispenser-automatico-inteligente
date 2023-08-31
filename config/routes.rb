@@ -19,7 +19,6 @@ Rails.application.routes.draw do
   get '/devices/in_use', to: 'devices#in_use', as: 'devices_in_use'
   get '/devices/in_use_seller', to: 'devices#in_use_seller', as: 'devices_in_use_seller'
 
-  resources :api_manager
 
   resources :dose_prices
 
