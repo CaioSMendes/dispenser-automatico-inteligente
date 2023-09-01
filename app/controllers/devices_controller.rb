@@ -5,7 +5,7 @@ class DevicesController < ApplicationController
     before_action :check_admin, only: [:assign_device]
     
     def index
-      response = HTTParty.get('https://dispenser-smart-api-9ae096adb72b.herokuapp.com/esp8266s')
+      response = HTTParty.get('https://dispenser-smart-api-947773b37df2.herokuapp.com/esp8266s')
       if response.code == 200
         api_data_array = JSON.parse(response.body)
     

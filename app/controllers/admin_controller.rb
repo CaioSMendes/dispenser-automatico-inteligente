@@ -3,7 +3,7 @@ require 'httparty'
 class AdminController < ApplicationController
     def index
         # Obter os dados da API
-        response = HTTParty.get('https://dispenser-smart-api-9ae096adb72b.herokuapp.com/esp8266s')
+        response = HTTParty.get('https://dispenser-smart-api-947773b37df2.herokuapp.com/esp8266s')
         data = JSON.parse(response.body)
 
         # Obter a quantidade total de IDs

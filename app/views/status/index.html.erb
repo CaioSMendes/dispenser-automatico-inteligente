@@ -184,7 +184,9 @@
               </br>
               </br>
               <div class="text-center">
-                <%= paginate @results, theme: 'bootstrap-5', pagination_class: "pagination-sm flex-wrap justify-content-center", nav_class: "d-inline-block" %>
+                <%if @api_data.present?%>
+                  <%= paginate @api_data, theme: 'bootstrap-5', pagination_class: "pagination-sm flex-wrap justify-content-center", nav_class: "d-inline-block" %>
+                <%end%>
               </div>
               </div>
               </div>
@@ -215,7 +217,7 @@
       button.addEventListener("click", function() {
         const newStatus = currentState === "unlock" ? "lock" : "unlock";
 
-        fetch(`http://localhost:4000/esp8266s/${id}`, {
+        fetch(`https://dispenser-smart-api-947773b37df2.herokuapp.com/esp8266s/${id}`, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json"
