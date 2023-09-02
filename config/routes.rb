@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   delete 'devices/:id/dissociate', to: 'devices#dissociate', as: 'dissociate_device'
   get '/devices/in_use', to: 'devices#in_use', as: 'devices_in_use'
   get '/devices/in_use_seller', to: 'devices#in_use_seller', as: 'devices_in_use_seller'
+  get '/user/dashboard', to: 'user#dashboard', as: 'dashboard'
+
 
 
   resources :dose_prices
@@ -39,8 +41,10 @@ Rails.application.routes.draw do
   resources :devices, only: [:new, :create, :show, :destroy]
   
 
+  devise_for :users
+  #devise_for :users, controllers: { registrations: 'users/registrations' }
 
-  devise_for :users, controllers: { registrations: 'users/registrations' }
+
   resources :admin, only: [:destroy]
   resources :users, only: [:index, :show, :destroy]
     devise_scope :user do

@@ -1,8 +1,46 @@
-<div class="container-fluid">
-  <div class="row">
-    <!------------------------ Sidebar ----------------------------->
-    <aside class="col-md-3 col-lg-2 bg-dark p-0 vh-100" style="width: 280px;">
-      <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
+<body class="d-flex flex-column min-vh-100">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <%= link_to admin_index_path, class: 'navbar-brand' do %>
+      <i class="fa fa-home"></i>
+      Painel Administrativo
+    <% end %>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+            Opções <i class="fa fa-gear"></i>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#">
+              <i class="fa fa-user"></i>
+              <%= current_user.name %>
+            </a>                
+            <%= link_to edit_user_registration_path, class: 'dropdown-item' do %>
+              <i class="fa fa-cog"></i>
+              Editar
+            <% end %>                
+            <%= link_to destroy_user_session_path, method: :delete, class: 'dropdown-item' do %>
+              <i class="fa fa-sign-out"></i>
+              Sair
+            <% end %>              
+          </div> 
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <div class="d-flex flex-grow-1">
+    <aside class="col-md-3 col-lg-2 bg-dark p-0">
+      <!-- Seu código de Sidebar aqui -->
+      <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark">
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
           <i class="fa fa-bars me-2" aria-hidden="true"></i>
           <span class="fs-4">Menu</span>
@@ -94,7 +132,8 @@
         </hr>
       </div>
     </aside>
-    <!------------------------ /Sidebar ----------------------------->
+    <main class="col">
+      <!-- Seu conteúdo principal aqui -->
+    </main>
   </div>
-</div>
-    
+</body>
