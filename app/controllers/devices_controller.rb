@@ -59,8 +59,24 @@ class DevicesController < ApplicationController
     end
 
     def in_use
-      #@devices = Device.all.page(params[:page]).per(10)
       @devices = Device.includes(:user).where.not(user_id: nil)
+      #@devices = Device.all
+    end
+
+    def userdevice
+      #@devices = Device.all # ou lógica para obter os dispositivos desejados
+      # Certifique-se de que o usuário está logado
+      if user_signed_in?
+          # Obtenha o usuário atual
+          @user = current_user
+          
+          # Obtenha os dispositivos atrelados a este usuário
+          @devices = @user.devices
+        else
+          # Caso o usuário não esteja logado, você pode redirecioná-lo ou fazer outra coisa
+          redirect_to new_user_session_path
+        end
+        @sellers = current_user.sellers
     end
 
     def in_use_seller
@@ -71,24 +87,27 @@ class DevicesController < ApplicationController
 
     def associate_seller
       @device = Device.find(params[:id])
-      seller_id = params[:device][:seller_id]
-      @seller = Seller.find(seller_id)
+      @seller = Seller.find(params[:device][:seller_id])
   
-      if @device.update(seller_id: seller_id)
-        render :show_seller, notice: "Dispositivo associado com sucesso!"
-      else
-        render :show, alert: "Erro ao associar o dispositivo ao vendedor."
+      # Verifique se já existe uma associação para evitar duplicatas
+      unless @device.sellers.include?(@seller)
+        @device.sellers << @seller
       end
+      redirect_to managerseller_path, notice: 'Vendedor associado com sucesso.'  
     end
   
     def dissociate_seller
-      @device = Device.find(params[:id])
+      @device = Device.find(params[:device_id])
+      @seller = Seller.find(params[:seller_id])
   
-      if @device.update(seller_id: nil)
-        redirect_to @device, notice: "Dispositivo desassociado com sucesso!"
+      if @device.sellers.exists?(@seller)
+        @device.sellers.delete(@seller)
+        flash[:success] = 'Vendedor desassociado com sucesso.'
       else
-        render :show, alert: "Erro ao desassociar o dispositivo do vendedor."
+        flash[:error] = 'Vendedor não está associado a este dispositivo.'
       end
+  
+      redirect_to devices_path
     end
 
     def show

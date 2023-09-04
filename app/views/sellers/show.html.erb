@@ -3,16 +3,11 @@
     <!-------------------- --Conteúdo principal ------------------------->
     <!-- Conteúdo principal -->
       <div class="col-lg-9">
-        <h1 class="mt-4">Dados do <%= @seller.nome %></h1>
+        <h1 class="mt-4">Dados do Vendedor:  <%= @seller.nome %></h1>
         <div class="right_col" role="main">
           <!-- ... (conteúdo do gráfico e da tabela) ... -->
             <p style="color: green"><%= notice %></p>
               <%= render @seller %>
-              <div>
-                <%= link_to "Edit this seller", edit_seller_path(@seller) %> |
-                <%= link_to "Back to sellers", sellers_path %>
-                <%= button_to "Destroy this seller", @seller, method: :delete %>
-              </div>
           <!-- ... (Fnal conteúdo do gráfico e da tabela) ... -->  
     <!-- /Conteúdo principal -->
     <!--------------------- /Conteúdo principal ------------------------->

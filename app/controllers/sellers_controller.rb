@@ -1,4 +1,5 @@
 class SellersController < ApplicationController
+  before_action :authenticate_user! # Certifique-se de que o usuário esteja autenticado
   before_action :set_seller, only: %i[show edit update destroy attach_devices save_attached_devices]
 
   # GET /sellers or /sellers.json
@@ -6,6 +7,26 @@ class SellersController < ApplicationController
     @sellers = Seller.all
     @devices = Device.all
     #@devices = Device.includes(:seller)
+  end
+
+  def managerseller
+    #@sellers = Seller.where(creator_id: current_user.id)
+    @sellers = current_user.sellers # Obtém todos os vendedores do usuário atual
+  end
+
+
+  def dissociate_seller
+    @seller = Seller.find(params[:seller_id])
+    @device = Device.find(params[:device_id])
+
+    if @device.sellers.exists?(@seller)
+      @device.sellers.delete(@seller)
+      flash[:success] = 'Vendedor desassociado com sucesso.'
+    else
+      flash[:error] = 'Vendedor não está associado a este dispositivo.'
+    end
+
+    redirect_to devices_path
   end
 
   def associate_device_seller
@@ -59,7 +80,8 @@ class SellersController < ApplicationController
 
   # POST /sellers or /sellers.json
   def create
-    @seller = Seller.new(seller_params)
+    @seller = current_user.sellers.build(seller_params)
+    #@seller = Seller.new(seller_params)
 
     respond_to do |format|
       if @seller.save
@@ -87,12 +109,26 @@ class SellersController < ApplicationController
 
   # DELETE /sellers/1 or /sellers/1.json
   def destroy
-    @seller.destroy
-
-    respond_to do |format|
-      format.html { redirect_to sellers_url, notice: "Seller was successfully destroyed." }
-      format.json { head :no_content }
+    if @seller.device_sellers.any?
+      # Se o vendedor estiver associado a dispositivos, você pode decidir o que fazer,
+      # como desassociar o vendedor desses dispositivos ou simplesmente impedir a exclusão.
+      flash[:alert] = "Não é possível excluir este vendedor porque ele está associado a dispositivos."
+      redirect_to sellers_url
+    else
+      @seller.destroy
+      respond_to do |format|
+        format.html { redirect_to sellers_url, notice: "Seller was successfully destroyed." }
+        format.json { head :no_content }
+      end
     end
+  end
+
+  def destroy_sellers
+      # Ação para destruir um recurso (por exemplo, um vendedor)
+    @seller = Seller.find(params[:id])
+    @seller.destroy
+    
+    redirect_to sellers_path, notice: 'Vendedor destruído com sucesso.' # Redireciona para a página de índice ou outra rota apropriada.
   end
 
   def associate_device

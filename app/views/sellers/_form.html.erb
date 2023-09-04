@@ -15,7 +15,7 @@
 
         <div class="form-group">
           <%= form.label :status %>
-          <%= form.text_field :status, class: "form-control" %>
+          <%= form.select :status, [['Ativo', 'Ativo'], ['Inativo', 'Inativo']], { include_blank: true }, class: "form-control" %>
         </div>
 
         <div class="form-group">
@@ -24,18 +24,13 @@
         </div>
 
         <div class="form-group">
-          <%= form.label :cardRFID %>
-          <%= form.text_field :cardRFID, class: "form-control" %>
+          <%= form.label :email %>
+          <%= form.text_field :email, class: "form-control" %>
         </div>
 
         <div class="form-group">
           <%= form.label :cargo %>
           <%= form.text_field :cargo, class: "form-control" %>
-        </div>
-
-        <div class="form-group mb-4">
-          <%= form.label :contador %>
-          <%= form.number_field :contador, class: "form-control" %>
         </div>
 
         <div class="d-flex justify-content-between">

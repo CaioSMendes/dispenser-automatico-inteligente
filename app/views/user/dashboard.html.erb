@@ -1,0 +1,223 @@
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css">
+
+  <!-- Script para atualizar o total automaticamente -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var precoInput = document.getElementById("preco_input");
+      precoInput.addEventListener("input", function() {
+        var total_price = document.getElementById("total_price");
+        var preco = parseFloat(precoInput.value);
+        var dosePrice = <%= DosePrice.first.price || 0 %>; // Valor padrão para o preço da dose
+        var total = <%= @total_price || 0 %>; // Valor padrão para o total se ainda não estiver definido
+        if (!isNaN(preco)) {
+          total = <%= @total_price || 0 %> * preco * dosePrice;
+        }
+        total_price.innerText = total.toFixed(2); // Exibir com duas casas decimais
+      });
+    });
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css">
+
+  
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Conteúdo principal -->
+      <div class="col-lg-9">
+        <h1 class="mt-4">Bem-vindo ao Painel do Usuário</h1>
+        <div class="row">
+          <div class="col-md-4">
+            <!-- Gráfico 1 -->
+            <div class="card mb-4">
+              <div class="card-header">
+                Quantidade de doses
+              </div>
+              <div class="card-body">
+              <canvas id="devicesChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <!-- Gráfico 2 -->
+            <div class="card mb-4">
+              <div class="card-header">
+                Usuários
+              </div>
+              <div class="card-body">
+                <canvas id="usersChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <!-- Gráfico 3 -->
+            <div class="card mb-4">
+              <div class="card-header">
+                Gráfico 3
+              </div>
+              <div class="card-body">
+                <canvas id="sellerSalesChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <!-- Card 1 -->
+            <div class="card mb-4">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <i class="fa fa-desktop"></i>
+                  Dispositivos
+                </h5>
+                <p class="card-text"><%= @devices_count %></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <!-- Card 2 -->
+            <div class="card mb-4">
+              <div class="card-body bg-red">
+                <h5 class="card-title">
+                  <i class="fa fa-user"></i>
+                  Vendedores
+                </h5>
+                <p class="card-text"><%= @sellers_count %></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+          <!-- Card 3 -->
+          <div class="card mb-4">
+            <div class="card-body">
+              <h5 class="card-title">
+                <i class="fa fa-dollar"></i>
+                Total Vendidos
+              </h5>
+              <p class="card-text"> R$ <%= @total_price %></p>
+            </div>
+          </div>
+        </div>
+
+        </div>
+      </div>
+      <!-- /Conteúdo principal -->
+    </div>
+  </div>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+  <script>
+    // Dados de exemplo para os gráficos
+
+    document.addEventListener("DOMContentLoaded", function() {
+      var ctx = document.getElementById("devicesChart").getContext("2d");
+      
+      var deviceNames = <%= @device_names.to_json.html_safe %>;
+      var deviceCounts = <%= @device_counts.to_json.html_safe %>;
+      
+      var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: deviceNames,
+          datasets: [{
+            label: 'Doses por Dispositivos',
+            data: deviceCounts,
+            backgroundColor: 'rgba(54, 162, 235, 0.8)',
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+    var ctx = document.getElementById("usersChart").getContext("2d");
+    
+    var roleLabels = <%= @role_counts.keys.to_json.html_safe %>;
+    var roleCounts = <%= @role_counts.values.to_json.html_safe %>;
+    
+    var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: roleLabels,
+          datasets: [{
+            data: roleCounts,
+            backgroundColor: [
+              'rgba(54, 162, 235, 0.8)',
+              'rgba(75, 192, 192, 0.8)'
+              // Adicione mais cores se necessário
+            ],
+          }]
+        }
+      });
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+      var ctx = document.getElementById("sellerSalesChart").getContext("2d");
+      
+      var sellerNames = <%= @seller_names.to_json.html_safe %>;
+      var totalSales = <%= @total_sales.to_json.html_safe %>;
+      
+      var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: sellerNames,
+          datasets: [{
+            label: 'Total de Vendas',
+            data: totalSales,
+            backgroundColor: 'rgba(54, 162, 235, 0.8)',
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    });
+
+    var data3 = {
+      labels: ['A', 'B', 'C', 'D', 'E'],
+      datasets: [{
+        label: 'Score',
+        data: [75, 65, 80, 90, 85],
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderColor: 'rgba(255, 99, 132, 1)',
+        borderWidth: 1
+      }]
+    };
+
+    
+
+    // Configurações dos gráficos
+    var options = {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    };
+
+    var ctx3 = document.getElementById('chart3').getContext('2d');
+    var chart3 = new Chart(ctx3, {
+      type: 'radar',
+      data: data3,
+      options: options
+    });
+  </script>

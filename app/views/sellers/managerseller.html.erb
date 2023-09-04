@@ -1,0 +1,80 @@
+<div class="container-fluid">
+    <div class="row">
+      <!-------------------- --Conteúdo principal ------------------------->
+      <!-- Conteúdo principal -->
+        <div class="col-lg-9">
+          <h1 class="mt-4">Gerenciamento de Vendedores</h1>
+            <% if current_user.admin? %>
+              <%= link_to devices_in_use_seller_path, class: 'btn btn-success' do %>
+                <i class="fa fa-plus"></i> Atrelar Vendedor ao Dispositivo
+              <% end %>
+              <% else %>
+                <div class="d-flex">
+                  <%= link_to new_seller_path, class: "btn btn-success me-2" do %>
+                    <i class="fa fa-user-plus"></i> Novo vendedor
+                  <% end %>
+                
+                  <%= link_to userdevice_path, class: 'btn btn-success' do %>
+                    <i class="fa fa-plus"></i> Atrelar Vendedor ao Dispositivo
+                  <% end %>
+                </div>
+            <% end %>
+          <div class="right_col" role="main">
+            <!-- ... (conteúdo do gráfico e da tabela) ... -->
+              <div class="container">
+                <div class="row justify-content-center">
+                  <div class="col-md-12">
+                    <div class="table-responsive">
+                      <table class="table table-responsive-sm">
+                        <thead>
+                          <tr>
+                            <th>Status</th>
+                            <th>Nome</th>
+                            <th>Cartão RFID</th>
+                            <th>Cargo</th>
+                            <th>Doses</th>
+                            <th>Email</th>
+                            <th>Ver</th>
+                            <th>Editar</th>
+                            <th>Excluir</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% @sellers.each do |seller| %>
+                            <tr>
+                              <td><%= seller.status %></td>
+                              <td><%= seller.nome %></td>
+                              <td><%= seller.cardRFID %></td>
+                              <td><button type="button" class="btn btn-info"><%= seller.cargo %></button></td>
+                              <td><%= seller.contador %></td>
+                              <td><%= seller.email %></td>
+                              <td>
+                                <%= button_to seller_path(seller), method: :get, class: 'btn btn-primary' do %>
+                                  <i class="fa fa-search"></i>
+                                <% end %>
+                              </td>
+              
+                              <td>
+                                <%= button_to edit_seller_path(seller), method: :get, class: 'btn btn-warning' do %>
+                                  <i class="fa fa-edit"></i>
+                                <% end %>
+                              </td>
+              
+                              <td>
+                                <%= button_to seller_path(seller), method: :delete, data: { confirm: 'Tem certeza que deseja excluir este usuário?' }, class: 'btn btn-danger' do %>
+                                  <i class="fa fa-trash"></i>
+                                <% end %>
+                              </td>
+                            </tr>
+                          <% end %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>           
+            <!-- ... (Fnal conteúdo do gráfico e da tabela) ... -->  
+      <!-- /Conteúdo principal -->
+      <!--------------------- /Conteúdo principal ------------------------->
+    </div>
+  </div>

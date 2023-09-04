@@ -1,0 +1,94 @@
+<!-- app/views/devices/index.html.erb -->
+
+<h1>Lista de Dispositivos</h1>
+<% @devices.each do |device| %>
+    <% if device.sellers.present? %>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Vendedor</th>
+            <th>Ação</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% device.sellers.each do |seller| %>
+            <tr>
+            <td><%= seller.nome %></td>
+            <td>
+                <%= button_to "Desassociar", dissociate_seller_seller_path(device, seller), method: :delete, data: { confirm: 'Tem certeza que deseja desassociar este vendedor?' }, class: "btn btn-danger btn-sm" %>
+            </td>
+            </tr>
+        <% end %>
+        </tbody>
+    </table>
+    <% else %>
+    Nenhum vendedor associado a este dispositivo.
+    <% end %>
+<% end %>
+
+
+
+
+  <div class="container-fluid">
+  <div class="row">
+    <!-------------------- --Conteúdo principal ------------------------->
+    <!-- Conteúdo principal -->
+      <div class="col-lg-9">
+        <h1 class="mt-4">Gerenciamento do Vendedor ao Dispositivo</h1>
+        <div class="right_col" role="main">
+          <!-- ... (conteúdo do gráfico e da tabela) ... -->
+            <div class="table-responsive">
+              <table class="table table-responsive-sm">
+                <thead>
+                  <tr>
+                    <th>Dispositivo</th>
+                    <th>Status</th>
+                    <th>Endereço de IP</th>
+                    <th>Vendedor Associado</th>
+                    <th>Ação</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @devices.each do |device| %>
+                    <tr>
+                      <td><%= device.device %></td>
+                      <td><%= device.status %></td>
+                      <td><%= device.ipadrrs %></td>
+                      <td>
+                        <% if device.seller %>
+                          <%= device.seller.nome %>
+                        <% else %>
+                          Nenhum vendedor associado
+                        <% end %>
+                      </td>
+                      <td>
+                        <% if device.seller %>
+                          <%= button_to "Desassociar Vendedor", dissociate_seller_seller_path(device), method: :delete, data: { confirm: 'Tem certeza que deseja desassociar este dispositivo?' }, class: "btn btn-danger btn-sm" %>
+                        <% else %>
+                          <%= form_tag associate_seller_seller_path(device), method: :post, class: "d-flex" do %>
+                            <%= select_tag "device[seller_id]", options_from_collection_for_select(@sellers, :id, :nome), prompt: 'Selecione um vendedor', class: 'form-control me-2' %>
+                            <%= submit_tag "Associar", class: "btn btn-primary btn-sm" %>
+                          <% end %>
+                        <% end %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          <!-- ... (Fnal conteúdo do gráfico e da tabela) ... -->  
+    <!-- /Conteúdo principal -->
+    <!--------------------- /Conteúdo principal ------------------------->
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+

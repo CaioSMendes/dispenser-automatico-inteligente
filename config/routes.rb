@@ -3,7 +3,10 @@ Rails.application.routes.draw do
   resources :sellers do
     member do
       post 'associate_seller', to: 'devices#associate_seller'
-      delete 'dissociate_seller', to: 'devices#dissociate_seller'
+      
+      delete 'destroy_sellers', to: 'sellers#destroy_sellers'
+      #delete 'dissociate_seller', to: 'devices#dissociate_seller'
+      delete 'dissociate_seller/:device_id', to: 'sellers#dissociate_seller', as: :dissociate_seller
     end
     get 'attach_devices'
     post 'save_attached_devices'
@@ -19,6 +22,13 @@ Rails.application.routes.draw do
   get '/devices/in_use', to: 'devices#in_use', as: 'devices_in_use'
   get '/devices/in_use_seller', to: 'devices#in_use_seller', as: 'devices_in_use_seller'
   get '/user/dashboard', to: 'user#dashboard', as: 'dashboard'
+  get '/user/managerseller', to: 'sellers#managerseller', as: 'managerseller'
+  get '/user/userdevice', to: 'devices#userdevice', as: 'userdevice'
+
+
+  
+
+  
 
 
 

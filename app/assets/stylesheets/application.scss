@@ -40,3 +40,13 @@
   display: inline-block;
   margin-right: 10px; /* Ajuste o valor da margem conforme necessário */
 }
+
+.actions .cadastrar-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #ff6400;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}

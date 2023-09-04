@@ -132,14 +132,14 @@
                   <% else %>
                   <!-- Código para usuários normais -->
                   <li class="nav-item">
-                    <%= link_to admin_index_path, class: "nav-link active", "aria-current" => "page" do %>
+                    <%= link_to dashboard_path, class: "nav-link active", "aria-current" => "page" do %>
                       <i class="fa fa-home me-2" aria-hidden="true"></i>
                       Home
                     <% end %>
                   </li>
 
                   <li class="nav-item">
-                    <%= link_to sellers_path, class: "nav-link text-white d-flex align-items-center" do %>
+                    <%= link_to managerseller_path, class: "nav-link text-white d-flex align-items-center" do %>
                       <i class="fa fa-users me-2" aria-hidden="true"></i>
                       Gestão de Vendedores
                     <% end %>
